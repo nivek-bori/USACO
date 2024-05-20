@@ -69,61 +69,20 @@ public class Result {
       return new ArrayList<Integer>[][][] { toConnections, fromConnections };
    }
 
-   public static void findPath(ArrayList<Integer>[][] to, ArrayList<Integer>[][] from, int num) {
-      TreeMap<Integer, Integer> length = new TreeMap<>();
-
-      for (int y = 0; y < 8; y++) {
-         for (int x = 0; x < 5; x++) {
-            if (length.containsKey(compress(y, x))) {
-               continue;
-            }
-
-            length = next(to, length, compress(y, x), 0);
-         }
-      }
-   }
-
-   public static TreeMap<Integer, Integer> next(ArrayList<Integer>[][] to, TreeMap<Integer, Integer> length, int pos,
-         int depth) {
-      int[] position = decompress(pos);
-      ArrayList<Integer> paths = to[position[0]][position[1]];
-
-      depth += 1;
-      handleMaxDepth(depth, pos);
-      length.put(pos, depth);
-
-      for (int path : paths) {
-         length = (length.containsKey(paths)) ? combinePaths(to, length, pos, depth) : next(to, length, path, depth);
-         if (length.containsKey(paths)) {
-            length = combinePaths();
-         } else {
-            length = next(to, length, path, depth);
-         }
-      }
-
-      return length;
-   }
-
-   public static TreeMap<Integer, Integer> combinePaths(ArrayList<Integer>[][] to, TreeMap<Integer, Integer> length,
-         int pos, int depth) {
-      if (length.get(pos) >= depth) {
-         return length;
-      }
+   public static void findNext(ArrayList<Integer>[][] to, int depth, int pos, ArrayList<Integer> previous) {
+      depth += 1; updateMaxDepth(depth, pos);
 
       int[] position = decompress(pos);
       ArrayList<Integer> paths = to[position[0]][position[1]];
-
-      depth += 1;
-      handleMaxDepth(depth, pos);
       for (int path : paths) {
-         length.set(path, depth);
-         length = combinePaths(to, length, path, depth);
+         if (previous.contains(path) {continue;}
+         ArrayList<Integer> newPrevious = previous.ocpyOf();
+         newPrevious.add(path);
+         findNext(to, depth, path, newPrevious);
       }
-
-      return length;
    }
 
-   public static void handleMaxDepth(int depth, int pos) {
+   public static void updateMaxDepth(int depth, int pos) {
       if (depth > maxDepth) {
          maxDepth = depth;
          maxDepthI = new ArrayList<>();
@@ -131,5 +90,25 @@ public class Result {
       } else if (depth == maxDepth) {
          maxDepthI.add(pos);
       }
+   }
+
+   public static void findMaxDepth() {
+      if (maxDepthI.size() == 1) {
+         return 
+      }
+   }
+
+   public static void followMaxDepth(ArrayList<Integer>[][] from, int pos, ArrayList<Integer> currrentPath) {
+      currentPosition.add(pos);
+      int[] position = decompress(pos);
+      
+      ArrayList<Integer> paths = from[position[0]][position[1]];
+      if (paths.size() == 0) {return currentPosition;}
+      if (paths.size() == 1) {return followMaxDepth(from, paths.get(0), currentPosition;}
+
+      int maxPath = paths.get(0);
+      for (int path : paths) {maxPath = Math.max(path, maxPath);}
+
+      return followMaxDepth(from, maxPath, currentPosition);
    }
 }
