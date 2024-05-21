@@ -94,9 +94,9 @@ public class Result {
         }
     }
 
-    public static void findDepth(int[][][] to) {
+    public static void findDepth() {
         for (int i = 0; i < 40; i++) {
-            findNextDepth(to, 0, i, new ArrayList<Integer>());
+            findNextDepth(0, i, new ArrayList<Integer>());
         }
     }
 
