@@ -28,9 +28,9 @@ public class Result {
             maxDepth = 0;
             maxDepthI = new ArrayList<>();
 
-            int[][][][] connections = findConnections(board);
-            findDepth(connections[0]);
-            ArrayList<Integer> path = findMaxDepth(connections[1]);
+            findConnections(board);
+            findDepth(connections.get(0));
+            ArrayList<Integer> path = findMaxDepth(connections.get(1));
 
             board = updateBoard(board, path);
         }
