@@ -29,8 +29,8 @@ public class Result {
             maxDepthI = new ArrayList<>();
 
             findConnections(board);
-            findDepth(connections.get(0));
-            ArrayList<Integer> path = findMaxDepth(connections.get(1));
+            findDepth(toConnections);
+            ArrayList<Integer> path = findMaxDepth(fromConnections);
 
             board = updateBoard(board, path);
         }
@@ -148,7 +148,7 @@ public class Result {
             return currentPath;
         }
         if (paths.size() == 1) {
-            return nextMaxDepth(from, paths.get(0), currentPath);
+            return nextMaxDepth(paths.get(0), currentPath);
         }
 
         int maxPath = paths.get(0);
@@ -156,7 +156,7 @@ public class Result {
             maxPath = Math.max(path, maxPath);
         }
 
-        return nextMaxDepth(from, maxPath, currentPath);
+        return nextMaxDepth(maxPath, currentPath);
     }
 
     public static int[][] updateBoard(int[][] board, ArrayList<Integer> path) {
@@ -164,7 +164,7 @@ public class Result {
         findAllowedPowers(sum);
 
         board = removePath(board, path);
-        board = dropboard(board);
+        board = dropBoard(board);
         board = fillBoard(board);
 
         return board;
@@ -232,7 +232,7 @@ public class Result {
             board[y][x] = board[i][x];
         }
         for (int i = 0; i < d; i++) {
-            boad[i][x] = -1;
+            board[i][x] = -1;
         }
 
         return board;
