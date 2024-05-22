@@ -204,8 +204,8 @@ public class Main {
    public static int[][] updateBoard(int[][] board) {
       ArrayList<Integer> path = maxDepthI.get(0);
       int sum = findSum(board, path);
-      printLN("Sum", sum, allowedPowers[0]);
       findAllowedPowers(sum);
+      printLN("Sum", sum, allowedPowers[0]);
 
       board = removePath(board, path);
       board = dropBoard(board);
@@ -231,7 +231,7 @@ public class Main {
       }
 
       int closestPower = 2;
-      while (sum < closestPower) {
+      while (closestPower < sum) {
          sum *= 2;
       }
 
@@ -247,7 +247,7 @@ public class Main {
          board[position[0]][position[1]] = -1;
       }
 
-      int[] position = decompress(path.get(0));
+      int[] position = decompress(path.get(path.size() - 1));
       board[position[0]][position[1]] = allowedPowers[0];
 
       return board;
