@@ -27,9 +27,9 @@ public class Main {
       // String input = in.toString();
       String input = "4 128 4 128 32 16 16 4 256 16 32 4 16 64 4 8 64 64 256 8 16 2 2 256 4 32 128 2 64 8 256 32 128 16 2 8 32 32 4 32";
 
-      printLN("Input", parseBoard(input));
+      // printLN("Input", parseBoard(input));
       String output = solve(input);
-      out.println("Output " + output);
+      printLN(output);
 
       in.close();
       out.close();
@@ -46,13 +46,11 @@ public class Main {
          findDepth();
          // printLN("Max Depth Before", maxDepth, maxDepthI); // REMOVE
          findMaxDepth();
-         printLN("Max Depth", maxDepth, maxDepthI); // REMOVE
+         // printLN("Max Depth", maxDepth, maxDepthI); // REMOVE
 
          board = updateBoard(board);
 
-         // REMOVE
-         break;
-         // REMOVE
+         printLN("First", unparseBoard(board));
       }
 
       return unparseBoard(board);
@@ -206,7 +204,7 @@ public class Main {
       ArrayList<Integer> path = maxDepthI.get(0);
       int sum = findSum(board, path);
       findAllowedPowers(sum);
-      printLN("Sum", sum, allowedPowers[0], allowedPowers[4]);
+      // printLN("Sum", sum, allowedPowers[0], allowedPowers[4]);
 
       board = removePath(board, path);
       board = dropBoard(board);
