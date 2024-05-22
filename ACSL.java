@@ -254,8 +254,8 @@ public class Main {
    }
 
    public static int[][] dropBoard(int[][] board) {
-      for (int y = 7; y >= 1; y--) {
-         for (int x = 0; x < 5; x++) {
+      for (int y = 8; y >= 1; y--) {
+         for (int x = 0; x < 6; x++) {
             if (board[y][x] != -1) {
                continue;
             }
@@ -273,13 +273,13 @@ public class Main {
 
       return board;
    }
-
+   
    public static int[][] dropPosition(int[][] board, int y, int x, int d) {
-      for (int i = y; i >= y - d; i--) {
-         board[y][x] = board[i][x];
+      for (int i = y; i - d >= 0; i--) {
+          board[i][x] = board[i - d][x];
       }
       for (int i = 0; i < d; i++) {
-         board[i][x] = -1;
+          board[i][x] = -1;
       }
 
       return board;
