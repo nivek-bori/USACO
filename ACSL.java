@@ -18,7 +18,7 @@ public class Main {
    public static int maxDepth = 0;
    public static ArrayList<ArrayList<Integer>> maxDepthI = new ArrayList<>();
 
-   public static int[] allowedPowers = new int[] { 32, 16, 8, 4, 2 };
+   public static int[] allowedPowers = new int[] { 256, 128, 64, 32, 16, 8, 4, 2 };
 
    public static void main(String[] args) throws IOException {
       BufferedInputStream in = new BufferedInputStream(System.in);
@@ -27,6 +27,7 @@ public class Main {
       // String input = in.toString();
       String input = "4 128 4 128 32 16 16 4 256 16 32 4 16 64 4 8 64 64 256 8 16 2 2 256 4 32 128 2 64 8 256 32 128 16 2 8 32 32 4 32";
 
+      printLN("Input", parseBoard(input));
       String output = solve(input);
       out.println("Output " + output);
 
@@ -205,7 +206,7 @@ public class Main {
       ArrayList<Integer> path = maxDepthI.get(0);
       int sum = findSum(board, path);
       findAllowedPowers(sum);
-      printLN("Sum", sum, allowedPowers[0]);
+      printLN("Sum", sum, allowedPowers[0], allowedPowers[4]);
 
       board = removePath(board, path);
       board = dropBoard(board);
@@ -232,10 +233,10 @@ public class Main {
 
       int closestPower = 2;
       while (closestPower < sum) {
-         sum *= 2;
+         closestPower *= 2;
       }
 
-      for (int i = 0; i < 5; i++) {
+      for (int i = 0; i < 8; i++) {
          allowedPowers[i] = (int) closestPower;
          closestPower /= 2;
       }
@@ -247,15 +248,15 @@ public class Main {
          board[position[0]][position[1]] = -1;
       }
 
-      int[] position = decompress(path.get(path.size() - 1));
+      int[] position = decompress(path.get(0));
       board[position[0]][position[1]] = allowedPowers[0];
 
       return board;
    }
 
    public static int[][] dropBoard(int[][] board) {
-      for (int y = 8; y >= 1; y--) {
-         for (int x = 0; x < 6; x++) {
+      for (int y = 7; y >= 1; y--) {
+         for (int x = 0; x < 5; x++) {
             if (board[y][x] != -1) {
                continue;
             }
@@ -273,13 +274,13 @@ public class Main {
 
       return board;
    }
-   
+
    public static int[][] dropPosition(int[][] board, int y, int x, int d) {
-      for (int i = y; i - d >= 0; i--) {
-          board[i][x] = board[i - d][x];
+      for (int i = y; i - d < 0; i++) {
+         board[i][x] = board[i - d][x];
       }
       for (int i = 0; i < d; i++) {
-          board[i][x] = -1;
+         board[i][x] = -1;
       }
 
       return board;
@@ -294,7 +295,7 @@ public class Main {
             }
 
             board[y][x] = allowedPowers[currentPower];
-            currentPower = (currentPower + 1) % 5;
+            currentPower = (currentPower + 1) % 8;
          }
       }
 
