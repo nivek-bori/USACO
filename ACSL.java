@@ -43,8 +43,9 @@ public class Main {
 
          findConnections(board);
          findDepth();
-         findMaxDepthPath();
-         printL("Max Depth", maxDepth, maxDepthI); // REMOVE
+         // printLN("Max Depth Before", maxDepth, maxDepthI); // REMOVE
+         findMaxDepth();
+         printLN("Max Depth", maxDepth, maxDepthI); // REMOVE
 
          board = updateBoard(board);
 
@@ -123,33 +124,22 @@ public class Main {
 
    public static void findDepth() {
       for (int i = 0; i < 40; i++) {
-         System.out.println("Find Depth From: " + i); // REMOVE
          findNextDepth(0, i + 1, new ArrayList<Integer>());
       }
    }
 
    public static void findNextDepth(int depth, int pos, ArrayList<Integer> previous) {
-      // REMOVE
-      if (depth == 1) {
-         return;
-      }
-      // REMOVE
-
       depth += 1;
       previous.add(pos);
       updateDepth(depth, previous);
 
       int[] position = decompress(pos);
       ArrayList<Integer> paths = (depth != 1) ? toConnections.get(position[0]).get(position[1])
-            : depths == 0 && !toSameConnections.get(postion[0]).get(position[1]).contains(path);
+            : toSameConnections.get(position[0]).get(position[1]);
       for (int path : paths) {
          if (previous.contains(path)) {
             continue;
          }
-
-         // REMOVE
-         System.out.println("Find Next Depth at : " + path + " - " + previous);
-         // REMOVE
 
          findNextDepth(depth, path, new ArrayList<>(previous));
       }
@@ -157,7 +147,6 @@ public class Main {
 
    public static void updateDepth(int depth, ArrayList<Integer> path) {
       if (depth > maxDepth) {
-         printL("Depth", depth, maxDepth, path);
          maxDepth = depth;
          maxDepthI = new ArrayList<>();
          maxDepthI.add(path);
@@ -166,16 +155,56 @@ public class Main {
       }
    }
 
-   public static void findMaxDepthPath() {
+   public static void findMaxDepth() {
       if (maxDepthI.size() == 1) {
          return;
       }
 
+      int maxLength = 0;
+      for (ArrayList<Integer> maxPath : maxDepthI) {
+         maxLength = Math.max(maxPath.size(), maxLength);
+      }
+
+      for (int t = 0; t < maxLength; t++) {
+         int maxValue = 0;
+         for (int i = 0; i < maxDepthI.size(); i++) {
+            ArrayList<Integer> path = maxDepthI.get(i);
+
+            if (path.size() <= t) {
+               maxDepthI.remove(i);
+               i--;
+               continue;
+            }
+
+            int value = path.get(i);
+            if (value > maxValue) {
+               for (int j = 0; j < i;) {
+                  maxDepthI.remove(0);
+                  i--;
+               }
+               continue;
+            }
+            if (value < maxValue) {
+               maxDepthI.remove(i);
+               i--;
+               continue;
+            }
+         }
+
+         if (maxDepthI.size() == 1) {
+            break;
+         }
+
+         for (ArrayList<Integer> maxPath : maxDepthI) {
+            maxLength = Math.max(maxPath.size(), maxLength);
+         }
+      }
    }
 
    public static int[][] updateBoard(int[][] board) {
       ArrayList<Integer> path = maxDepthI.get(0);
       int sum = findSum(board, path);
+      printLN("Sum", sum, allowedPowers[0]);
       findAllowedPowers(sum);
 
       board = removePath(board, path);
@@ -217,6 +246,9 @@ public class Main {
          int[] position = decompress(pos);
          board[position[0]][position[1]] = -1;
       }
+
+      int[] position = decompress(path.get(0));
+      board[position[0]][position[1]] = allowedPowers[0];
 
       return board;
    }
@@ -281,10 +313,16 @@ public class Main {
       return str.toString();
    }
 
-   public static void printL(Object... objects) {
+   public static void printLN(Object... objects) {
       for (Object value : objects) {
          System.out.print(value + " ");
       }
       System.out.println();
+   }
+
+   public static void printL(Object... objects) {
+      for (Object value : objects) {
+         System.out.print(value + " ");
+      }
    }
 }
