@@ -1,0 +1,42 @@
+public class Main {
+public static voud main(String[] args) {
+
+global int[][] field
+global int x1, y1
+global int x2, y2
+
+global Hashset visited
+global int count
+global LinkedList chars
+
+currCharNum = 0
+Map<String, Integer> map
+for y
+for x
+if !map.contains(currChsr)
+currCharNum++
+map.put(currChar, currCharNum)
+
+field[y, x] = map.get(currChar)
+
+
+function floodfill(int x, int y, int initVal)
+if !visited.add(encode(x, y))
+return
+
+if pos not in range
+return
+
+if field[y, x] != initVal
+count++
+chars.add(field[y, x])
+if (count <= 2)
+floodfill(x + xChng[i], y + yChng[i], field[y, x]))
+
+else
+for i = 0 until 4
+floodfill(x + xChng[i], y + yChng[i], initVal)
+
+
+
+
