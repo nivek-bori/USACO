@@ -1,3 +1,40 @@
+// TWO THINGS
+
+// INCOMPLETE CODE
+public class Edge {
+    int a;
+    int b;
+    int to = -1;
+    int from = -1;
+    public Edge(int a, int b) {
+        // TODO
+    }
+}
+
+public static void dfs(int node) {
+    int edgeI = head[node];
+    while (edgeI != -1) {
+        Edge edge = edges[edgeI];
+        if (edge.to != -1) {
+            edgeI = next[edgeI];
+            continue;
+        }
+        
+        int degree = degrees[node];
+        if (degree % 2 == 0) {
+            edge.from = node;
+            edge.to = edge.a + edge.b - node;
+        } else {
+            edge.to = node;
+            edge.from = edge.a + edge.b - node;
+        }
+        
+        dfs(edge.to);
+    }
+}
+
+// UNTESTED CODE
+
 class Main {
     private static boolean kill = false;
     
