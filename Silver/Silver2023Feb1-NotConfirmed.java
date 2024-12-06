@@ -1,3 +1,6 @@
+import java.io.*;
+import java.util.*;
+
 public class Main {
     private static int a;
     private static int b;
@@ -7,6 +10,9 @@ public class Main {
     private static int[] maxT;
     
     public static void main(String[] args) throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        PrintWriter out = new PrintWriter(System.out);
+        
         StringTokenizer st = new StringTokenizer(in.readLine());
         int n = Integer.parseInt(st.nextToken());
         a = Integer.parseInt(st.nextToken());
@@ -34,6 +40,10 @@ public class Main {
                 hi = mid;
             }
         }
+
+        out.println((int) ((lo + hi + 1) / 2.0));
+        in.close();
+        out.close();
     }
 
     public static boolean tryCost(int c) {
