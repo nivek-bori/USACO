@@ -1,7 +1,3 @@
-binary search cost range is: 0 - (timeC + timeM)
-given a cost, binary search money on cookies
-  save state with 1000 * c + m
-
 public class Main {
     private static int a;
     private static int b;
