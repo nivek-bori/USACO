@@ -3,15 +3,15 @@ import java.util.*;
 
 public class Main {
 
-    static HashMap<String, Integer> alphabet = new HashMap<>();
-    
-    public static void main(String[] args) throws IOException {
-        // BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        // PrintWriter out = new PrintWriter(System.out);
+    static TreeMap<String, Integer> alphabet = new TreeMap<>();
 
-        BufferedReader in = new BufferedReader(new FileReader("system.in"));
-        PrintWriter out = new PrintWriter(new FileWriter("system.out"));
-        
+    public static void main(String[] args) throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        PrintWriter out = new PrintWriter(System.out);
+
+        // BufferedReader in = new BufferedReader(new FileReader("system.in"));
+        // PrintWriter out = new PrintWriter(new FileWriter("system.out"));
+
         alphabet.put("a", 1);
         alphabet.put("b", 2);
         alphabet.put("c", 3);
@@ -39,90 +39,86 @@ public class Main {
         alphabet.put("x", 25);
         alphabet.put("z", 26);
 
-        HashMap<Integer, Integer> moos = new HashMap<>();
-        
+        TreeMap<String, Integer> moos = new TreeMap<>();
+        HashMap<String, ArrayList<Integer>> indexes = new HashMap<>();
+
         StringTokenizer st = new StringTokenizer(in.readLine());
         int n = Integer.parseInt(st.nextToken());
         int f = Integer.parseInt(st.nextToken());
 
         String[] string = in.readLine().split("");
-        for (int i = 0; i < n - 3; i++) {
-            if (string[i + 1].equals(string[i + 2]) && !string[i].equals(string[i + 1])) {
-                int val = encode(string[i], string[i + 1]);
-                if (!moos.containsKey(val)) {
-                    moos.put(val, 1);
-                } else {
-                    moos.put(val, moos.get(val) + 1);
+        for (int i = 0; i < n - 2; i++) {
+            if (string[i + 1].equals(string[i + 2])) {
+                if (f == 1) {
+                    for (String key : alphabet.keySet()) {
+                        String str = key + string[i + 1];
+                        if (!moos.containsKey(str)) {
+                            moos.put(str, 1);
+                            indexes.put(str, new ArrayList<>());
+                        } else {
+                            moos.put(str, moos.get(str) + 1);
+                        }
+                        indexes.get(str).add(i);
+                        indexes.get(str).add(i + 1);
+                        indexes.get(str).add(i + 2);
+                    }
+                } else if (!string[i].equals(string[i + 1])) {
+                    String str = string[i] + string[i + 1];
+                    if (!moos.containsKey(str)) {
+                        moos.put(str, 1);
+                        indexes.put(str, new ArrayList<>());
+                    } else {
+                        moos.put(str, moos.get(str) + 1);
+                    }
+                    indexes.get(str).add(i);
+                    indexes.get(str).add(i + 1);
+                    indexes.get(str).add(i + 2);
                 }
             }
         }
 
-        for (int key : moos.keySet()) {
-            System.out.println(key + " " + moos.get(key));
-        }
+        LinkedList<String> works = new LinkedList<>();
 
-        ArrayList<Request> requests = new ArrayList<>();
-        LinkedList<Integer> works = new LinkedList<>();
+        for (String key : moos.keySet()) {
 
-        for (int key : moos.keySet()) {
             if (moos.get(key) >= f) {
-                works.add(key);
+                works.add(key + key.substring(1, 2));
             }
+
             if (moos.get(key) == f - 1) {
-                requests.add(new Request(key, key % 26));
-            }
-        }
-
-        for (int i = 0; i < n - 3; i++) {
-            if (string[i].equals(string[i + 1])) {
-                int N = requests.size();
-                for (int j = 0; j < N; j++) {
-                    Request req = requests.get(j);
-
-                    if (req.B == alphabet.get(string[i])) {
-                        requests.remove(j);
-                        j--;
-                        N--;
-                        works.add(req.A);
-                    }
+                String A = key.substring(0, 1);
+                String B = key.substring(1, 2);
+                
+                if (string[n - 2].equals(B) && string[n - 1].equals(B)) {
+                    works.add(key + B);
+                    continue;
                 }
-            }
 
-            if (!string[i].equals(string[i + 2])) {
-                int N = requests.size();
-                for (int j = 0; j < N; j++) {
-                    Request req = requests.get(j);
-
-                    if (req.A == encode(string[i], string[i + 2])) {
-                        requests.remove(j);
-                        j--;
-                        N--;
-                        works.add(req.A);
+                for (int i = 0; i < n - 2; i++) {
+                    String x = string[i];
+                    String y = string[i + 1];
+                    String z = string[i + 2];
+                    if (y.equals(B) && z.equals(B) && !indexes.get(key).contains(i)) {
+                        works.add(key + B);
+                        break;
                     }
-                }
-            }
-        }
 
-        if (string[n - 2] == string[n - 1]) {
-            int N = requests.size();
-            for (int j = 0; j < N; j++) {
-                Request req = requests.get(j);
+                    if (x.equals(A) && y.equals(B) && !indexes.get(key).contains(i + 2)) {
+                        works.add(key + B);
+                        break;
+                    }
 
-                if (req.B == alphabet.get(string[n - 2])) {
-                    requests.remove(j);
-                    j--;
-                    N--;
-                    works.add(req.A);
+                    if (x.equals(A) && z.equals(B) && !indexes.get(key).contains(i + 1)) {
+                        works.add(key + B);
+                        break;
+                    }
                 }
             }
         }
 
         out.println(works.size());
-        char[] reverseAlphabet = new char[] {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'y', 'x', 'z'};
-        for (int val : works) {
-            int[] pos = decode(val);
-
-            out.println(reverseAlphabet[pos[0]] + reverseAlphabet[pos[1]] + reverseAlphabet[pos[1]]);
+        for (String word : works) {
+            out.println(word);
         }
         in.close();
         out.close();
@@ -133,11 +129,12 @@ public class Main {
     }
 
     public static int[] decode(int val) {
-        return new int[] {val / 26, val % 26};
+        return new int[] { val / 26, val % 26 };
     }
 
     public static class Request {
         int A, B;
+
         public Request(int A, int B) {
             this.A = A;
             this.B = B;
