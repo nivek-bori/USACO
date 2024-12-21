@@ -2,58 +2,36 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-   public static void main(String[] args) throws IOException {
-      // BufferedReader in = new BufferedReader(
-      // new
-      // FileReader("/Users/kevinboriboonsomsin/Documents/Documents/Temp/system.in"));
-      // PrintWriter out = new PrintWriter(System.out);
-      BufferedReader in = new BufferedReader(new FileReader("div7.in"));
-      PrintWriter out = new PrintWriter(new FileWriter("div7.out"));
+    public static void main(String[] args) throws IOException {
+        BufferedReader in = new BufferedReader(new FileReader("div7.in"));
+        PrintWriter out = new PrintWriter(new FileWriter("div7.out"));
+        // BufferedReader in = new BufferedReader(new FileReader("system.in"));
+        // PrintWriter out = new PrintWriter(new FileWriter("system.out"));
 
-      int n = Integer.parseInt(in.readLine());
+        int n = Integer.parseInt(in.readLine());
 
-      long maxLength = 0l;
+        int[] sumAt = new int[n + 1];
+        for (int i = 1; i < n + 1; i++) {
+            Long val = Long.parseLong(in.readLine());
 
-      long[] sumAt = new long[n];
-      long totalSum = 0;
-      for (int i = 0; i < n; i++) {
-         int value = Integer.parseInt(in.readLine());
-         ;
-         totalSum += value;
-         sumAt[i] = totalSum;
+            sumAt[i] = (int) (val + sumAt[i - 1]) % 7;
+        }
 
-         if (value % 7 == 0) {
-            maxLength = 1l;
-         }
-      }
+        in.close();
 
-      for (int length = n; length > 1; length--) {
-         int maxI = n - length;
-         for (int i = 0; i <= maxI; i++) {
-            int a = i;
-            int b = i + length - 1;
+        for (int d = n; d > 0; d--) {
+            for (int a = 1; a + d < n + 1; a++) {
+                int b = a + d;
 
-            long sum;
-            if (a != 0) {
-               sum = sumAt[b] - sumAt[a - 1];
-            } else {
-               sum = sumAt[b];
+                if ((sumAt[b] - sumAt[a - 1]) % 7 == 0) {
+                    out.println(b - a + 1);
+                    out.close();
+                    return;
+                }
             }
+        }
 
-            if (sum % 7 == 0) {
-               maxLength = length;
-               break;
-            }
-         }
-
-         if (maxLength != 1) {
-            break;
-         }
-      }
-
-      out.println(maxLength);
-
-      in.close();
-      out.close();
-   }
+        out.println(0);
+        out.close();
+    }
 }
