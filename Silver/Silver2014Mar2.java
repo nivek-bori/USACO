@@ -1,3 +1,9 @@
+/*
+By applying a 45 degree rotation on the input curve
+It is possible for the diamond pattern to become a rectangle
+That way k steps corresponds to the rect (y - k, x - k) and (y + k, x + k)
+*/
+
 import java.io.*;
 import java.util.*;
 
