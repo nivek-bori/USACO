@@ -1,67 +1,91 @@
 import java.io.*;
 import java.util.*;
-
 public class Main {
-  public static void main(String[] args) throws IOException {
-    BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-    PrintWriter out = new PrintWriter(System.out);
+   public static void main(String[] args) throws IOException {
+      boolean print = false;
+//      BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+//      PrintWriter out = new PrintWriter(System.out);
 
-    StringTokenizer st = new StringTokenizer(in.readLine());
-    int n = Integer.parseInt(st.nextToken());
-    int m = Integer.parseInt(st.nextToken());
+      BufferedReader in = new BufferedReader(new FileReader("src/system.in"));
+      PrintWriter out = new PrintWriter(new FileWriter("src/system.out"));
+      print = true;
 
-    int[] smartness = new int[n];
-    String[] smartnessStr = in.readLine().split(" ");
-    for (int i = 0; i < n; i++) {
-      smartness[i] = Integer.parsent(smartnessStr[i]);
-    }
-    Arrays.sort(smartness);
+      int T = Integer.parseInt(in.readLine());
 
-    int l = 0;
-    int r = 0;
-    int minDist = Integer.MAX_VALUE;
+      for (int t = 0; t < T; t++) {
+         StringTokenizer st = new StringTokenizer(in.readLine());
+         int n = Integer.parseInt(st.nextToken());
+         int m = Integer.parseInt(st.nextToken());
 
-    MultiSet topics = new MultiSet<>();
-    topics.add(0);
-    topics.add(1);
-    
-    while (l < n && r < n) {
-      while (r < n && topics.size() < m) {
-        for (int i = 2; i < m && i <= smartness[r]; i++) {
-          if (smartness[r] % i == 0) {topics.add(i);}
-        }
+         int[] smartness = new int[n];
+         String[] smartnessStr = in.readLine().split(" ");
+         for (int i = 0; i < n; i++) {
+            smartness[i] = Integer.parseInt(smartnessStr[i]);
+         }
+         Arrays.sort(smartness);
+
+         int l = 0;
+         int r = 0;
+         int minDist = Integer.MAX_VALUE;
+
+         MultiSet topics = new MultiSet();
+
+         while (l < n && r < n) {
+            while (r < n && topics.size() < m) {
+               for (int i = 1; i < m && i <= smartness[r]; i++) {
+                  if (smartness[r] % i == 0) {topics.add(i);}
+               }
+               r++;
+            }
+
+            // REMOVE
+            if (print) {
+               for (int val : topics.map.keySet()) {
+                  out.print(val + " ");
+               }
+               out.println();
+            }
+            // REMOVE
+
+            // REMOVE
+//            if (print) {
+//               if (topics.size() == m && smartness[r - 1] - smartness[l] < minDist) {
+//                  out.println("A" + (smartness[r - 1] - smartness[l]) + " " + r + " " + l);
+//               }
+//            }
+            // REMOVE
+
+            if (topics.size() == m) {minDist = Math.min(smartness[r - 1] - smartness[l], minDist);}
+
+            for (int i = 1; i < m && i <= smartness[l]; i++) {
+               if (smartness[l] % i == 0) {topics.remove(i);}
+            }
+            l++;
+         }
+
+         out.println((minDist == Integer.MAX_VALUE) ? -1 : minDist);
       }
 
-      if (topics.size() == m) {
-        minDist = Math.min(r - l, minDist);
+      in.close(); out.close();
+   }
+
+   public static class MultiSet {
+      TreeMap<Integer, Integer> map = new TreeMap<>();
+
+      public void add(int val) {
+         if (!map.containsKey(val)) {
+            map.put(val, 0);
+         }
+         map.put(val, map.get(val) + 1);
       }
-      for (int i = 2; i < m && i <= smartness[l]; i++) {
-        if (smartness[l] % i == 0) {topics.remove(i);}
+
+      public void remove(int val ) {
+         map.put(val, map.get(val) - 1);
+         if (map.get(val) == 0) {
+            map.remove(val);
+         }
       }
-    }
 
-    out.println(minDist);
-    in.close(); out.close();
-  }
-
-  public static class MultiSet {
-    TreeMap<Integer, Integer> map = new TreeMap<>();
-
-    public void add(int val) {
-      if (!map.containsKey(val)) {
-        map.put(val, 0);
-      }
-      map.set(val, map.get(val) + 1);
-    }
-
-    public void remove(int val ) {
-      map.set(val, map.get(val) - 1);
-
-      if (map.get(val) == 0) {
-        map.remove(val);
-      }
-    }
-
-    public int size() {return map.size();}
-  }
+      public int size() {return map.size();}
+   }
 }
