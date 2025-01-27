@@ -16,7 +16,6 @@ public class Main {
             out = new PrintWriter(new FileWriter("system.out"));
         }
 
-
         int T = Integer.parseInt(in.readLine());
         boolean nextTestCase = false;
 
@@ -64,7 +63,7 @@ public class Main {
                     field[y - b][x - a][0] = true;
                     field[y][x][1] = true;
                     initStars++;
-    
+
                     // Requirement check
                     int cntA = (field[y - b][x - a][0] ? 1 : 0) + (field[y - b][x - a][1] ? 1 : 0);
                     if (req[y - b][x - a] < cntA) {
@@ -94,12 +93,18 @@ public class Main {
 
             for (int y = 0; y < n; y++) {
                 for (int x = 0; x < n; x++) {
-                    if (req[y][x] == 1 && !field[y][x][0] && !field[y][x][1]) {
+                    int cnt = (field[y][x][0] ? 1 : 0) + (field[y][x][1] ? 1 : 0);
+
+                    if (req[y][x] > cnt) {
                         field[y][x][0] = true;
                         initStars++;
 
-                        if (y + b < n && x + a < n && req[y + b][x + a] == 1 && !field[y + b][x + a][0] && !field[y + b][x + a][1]) {
-                            field[y + b][x + a][1] = true;
+                        if (y + b < n && x + a < n) {
+                            int cntB = (field[y + b][x + a][0] ? 1 : 0) + (field[y + b][x + a][1] ? 1 : 0);
+
+                            if (req[y + b][x + a] > cntB) {
+                                field[y + b][x + a][1] = true;
+                            }
                         }
                     }
                 }
@@ -107,7 +112,7 @@ public class Main {
 
             if (testing) {
                 for (int y = 0; y < n; y++) {
-                    for (int x = 0; x < n; x++ ){
+                    for (int x = 0; x < n; x++) {
                         out.print((field[y][x][0] ? 1 : 0) + "" + (field[y][x][1] ? 1 : 0) + " ");
                     }
                     out.println();
@@ -116,7 +121,8 @@ public class Main {
 
             out.println(initStars);
         }
-        
-        in.close(); out.close();
+
+        in.close();
+        out.close();
     }
 }
