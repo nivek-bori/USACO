@@ -1,5 +1,17 @@
-/// Notes: For the gcd function, always use the Euclidian algorithm - std::__gcd() is a function that exists
-/// for maps of pair to value, use map<keyA, map<keyB, value>>
+/// NOTE: For the gcd function, always use the Euclidian algorithm
+/// TECH: std::__gcd() is a function from <algorithm>
+
+/// TECH: For maps of pair to value, use map<keyA, map<keyB, value>>
+
+/// TECH - INPUT: For string inputs that are a list of char
+//         vector<char> str(len);
+//         for (char &c : str) { std::cin >> c; }
+
+/// TECH: This code can be simplified from:
+        // ratio_freq[a_count / gcd_val][b_count / gcd_val]++;
+        // cout << ratio_freq[a_count / gcd_val][b_count / gcd_val] << " ";
+/// Cont: Better code
+        // cout << ++ratio_freq[a_count / gcd_val][b_count / gcd_val] << " ";
 
 
 #include <iostream>
@@ -83,7 +95,6 @@ int main() {
             } else {
                 int gcd_val = gcd(a_count, b_count);
                 ratio_freq[a_count / gcd_val][b_count / gcd_val]++;
-
                 cout << ratio_freq[a_count / gcd_val][b_count / gcd_val] << " ";
             }
         }
