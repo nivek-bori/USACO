@@ -1,4 +1,4 @@
-/// Notes: For the gcd function, always use the Euclidian algorithm
+/// Notes: For the gcd function, always use the Euclidian algorithm - std::__gcd() is a function that exists
 /// for maps of pair to value, use map<keyA, map<keyB, value>>
 
 
