@@ -1,3 +1,5 @@
+/// Problem is CSES Common Divisors
+
 /// NOTE: Do not modify a vector or unordered_set while iterating over it
 /// TECH: For vectors and unordered_set, a.insert(b.begin(), b.end()) adds on to the other
 /// NOTE: Pruning is very important - try and avoid any computation that isn't required or does not contribute to the final answer
