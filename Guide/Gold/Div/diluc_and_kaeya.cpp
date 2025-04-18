@@ -1,4 +1,4 @@
-/// Probelm is codeforces: C. Diluc and Kaeya
+/// Probelm is codeforces: C. Diluc and Kaeya 1536C
 
 /// NOTE: For the gcd function, always use the Euclidian algorithm
 /// TECH: std::__gcd() is a function from <algorithm>
