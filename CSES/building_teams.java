@@ -3,7 +3,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class building_teams {
    public static LinkedList<Integer>[] paths;
    public static int[] assignments;
    public static boolean impossible = false;

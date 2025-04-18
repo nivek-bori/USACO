@@ -3,7 +3,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class R190_Div1_ProbB {
    public static void main(String[] args) throws IOException {
       BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
       PrintWriter out = new PrintWriter(System.out);
@@ -34,7 +34,7 @@ public class Main {
       }
 
       for (int i = 0; i < proNum; i++) {
-         cards.add(Integer.parseInt(in.readLine));
+         cards.add(Integer.parseInt(in.readLine()));
       }
 
       int maxDamage = Math.max(removeAll(attack, defenseCards, cards), dontRemoveAll(attackCards, defenseCards, cards));

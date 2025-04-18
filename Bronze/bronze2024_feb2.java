@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 import java.util.stream.IntStream;
 
-public class Main {
+public class bronze2024_feb2 {
    public static void main(String[] args) throws IOException {
       // BufferedReader in = new BufferedReader(
       // new

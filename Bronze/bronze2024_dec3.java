@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class bronze2024_dec3 {
 
     static TreeMap<String, Integer> alphabet = new TreeMap<>();
 

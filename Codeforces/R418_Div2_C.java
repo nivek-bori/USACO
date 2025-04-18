@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class R418_Div2_C {
     public static void main(String[] args) throws IOException {
         Map<Character, Integer> charMap = new HashMap<>();
         for (int i = 0; i < 26; i++) {charMap.put((char) ('a' + i), i);}

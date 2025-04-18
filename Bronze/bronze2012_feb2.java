@@ -1,6 +1,6 @@
 import java.io.*;
 
-public class Main {
+public class bronze2012_feb2 {
    public static void main(String[] args) throws IOException {
       BufferedReader in = new BufferedReader(new FileReader("cowtip.in"));
       PrintWriter out = new PrintWriter(new FileWriter("cowtip.out"));

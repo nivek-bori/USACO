@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class bronze2022_open3 {
    private static int[] metals;
 
    public static void main(String[] args) throws IOException {

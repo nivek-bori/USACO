@@ -1,6 +1,6 @@
 import java.io.*;
 import java.util.*;
-public class Main {
+public class InComp_R845_Div2 {
    public static void main(String[] args) throws IOException {
       boolean print = false;
 //      BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
