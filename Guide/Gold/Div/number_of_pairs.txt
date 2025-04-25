@@ -1,0 +1,3 @@
+The key insight here was to rearrange the equation and find that ab = (x / g + d) / c. From this, we know that c must divide x / g + d and that g must divide x. 
+Looping over all divisors of x for g, check if c divides x / g + d. If so, add the count of pairs possible to the total.
+I do not understand how the count is updated
